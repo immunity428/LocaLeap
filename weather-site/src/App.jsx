@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css';
 
 export default function MyApp() {
     //useStateは値の保持や更新するためのフック再レンダリングできる特徴あり
@@ -28,7 +29,7 @@ export default function MyApp() {
             });
     };
 
-    return (  //普通にHtml
+    return (  // 普通にHtml
         <div>
             <h1>天気予報サイト</h1>
             <div className="app">
@@ -56,9 +57,11 @@ export default function MyApp() {
                             <h3>{cityName} の5日間の天気</h3>
 
                             <div className="weather-grid">
+                                {/*  weatherData配列の各要素（1日の天気データ）を処理し、それぞれに対応するHTMLを生成 */}
+                                {/* {weatherData.map((entry) => {  この方法だと警告文がでる */}
                                 {weatherData.map((entry, index) => {  //map関数<<<理解いまいち
-                                    // weatherData配列の各要素（1日の天気データ）を処理し、それぞれに対応するHTMLを生成
                                     // weatherDataの各要素をentryとして受け取り、それを基に天気情報をレンダリング
+                                    // indexには現在処理している配列の要素が何番目であるかが代入されている
 
                                     const date = new Date(entry.dt * 1000).toLocaleDateString();
                                     // entry.dt（Unixタイムスタンプ）を日付形式に変換して、表示用の日付文字列を生成
@@ -76,11 +79,14 @@ export default function MyApp() {
                                     // 天気の説明（例: 晴れ、曇りなど）を取得
 
                                     const iconUrl = `https://openweathermap.org/img/wn/${entry.weather[0].icon}.png`;
-                                    // 天気のアイコン画像のURLを生成します。entry.weather[0].iconに対応する画像が表示
+                                    // 天気のアイコン画像のURLを生成、entry.weather[0].iconに対応する画像が表示
 
                                     return ( // 普通にhtml(出力用)
+                                        //<div key={entry.id} className="weather-item">  このほうほうだと警告文がでる
                                         <div key={index} className="weather-item">
+                                            {/* 日付 */}
                                             <h4>{date}</h4>
+                                            {/* 天気のアイコン */}
                                             <img src={iconUrl} alt={description} />
                                             <p>気温: {temp}°C</p>
                                             <p>天気: {description}</p>
