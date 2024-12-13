@@ -7,7 +7,7 @@ export default function MyApp() {
     const [Address, setAddress] = useState(""); // 郵便番号
     const [weatherData, set5daysWeather] = useState([]); // 天気データ
     const [cityName, setCity] = useState(""); // 市名
-    const apiKey = "Your_api_key"; // OpenWeatherMapのAPIキーを設定
+    const apiKey = import.meta.env.VITE_API_KEY;
     //ハードコーキング防止のため、ゆくゆくは環境変数にしていきたい
 
     // ボタンがクリックされたときの処理
