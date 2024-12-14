@@ -17,16 +17,16 @@ h1 {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* アプリ全体の中央寄せ */
+
 .app {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    height: 100vh;
+    min-height: 100vh;
 }
 
-/* フォームのスタイル */
+
 .form {
     background: #f0f8ff;
     padding: 20px;
@@ -42,7 +42,7 @@ label {
     margin-right: 10px;
 }
 
-input {
+#AddressInput {
     padding: 10px;
     font-size: 1em;
     border: 2px solid #87CEEB;
@@ -56,23 +56,24 @@ input:focus {
     border-color: #4682B4;
 }
 
-button {
+#SearchButton {
     background-color: #4682B4;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 5px 30px;
     font-size: 1em;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-left: 10px;
     margin-top: 10px;
 }
+
 
 button:hover {
     background-color: #1E90FF;
 }
 
-/* 天気予報セクション */
 #forecast {
     width: 100%;
     max-width: 800px;
@@ -121,4 +122,52 @@ p {
     font-size: 1.2em;
     margin-top: 20px;
     color: #333;
+}
+
+.todo-list {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-height: 300px;
+    /* 最大高さを設定 */
+    overflow-y: auto;
+    /* スクロールを有効に */
+}
+
+
+.todo-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.todo-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.todo-list li button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.todo-list li button:hover {
+    background-color: #c0392b;
+}
+
+.todo-list input {
+    width: calc(100% - 60px);
+    padding: 5px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
