@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ログファイルのパス
-log_file="test.log"
+log_file="access.log"
 
 echo "アクセス回数が多いIPアドレス Top5"
 
