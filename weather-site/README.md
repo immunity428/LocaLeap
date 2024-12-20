@@ -1,8 +1,12 @@
-# React + Vite
+仕様した技術:vite+React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+環境的な面では  
+習得のしやすさや、圧倒的なマーケットシェアを記録しているため需要が高いため。  
+また、PGの資料など学びやすい環境があったためReactを選択した。  
 
-Currently, two official plugins are available:
+技術的な面では  
+Todoリストの追加や削除に対して素早く画面を更新できる点  
+useStateフックで状態を簡単に管理できる点  
+アニメーションや遷移エフェクトなどを入れやすい  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+などからReactを選択しました。
