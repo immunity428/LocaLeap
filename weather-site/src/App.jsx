@@ -12,6 +12,14 @@ export default function MyApp() {
 
     // ボタンがクリックされたときの処理
     const ButtonClick = () => {
+        const formcheck = /[^\x01-\x7E]/.test(Address);
+        // .test()メソッドは、引数(Address)が手前の正規表現パターンに一致するかどうかを調べ、結果をtrueまたはfalseで返す
+
+        if (formcheck) {
+            alert('郵便番号は半角で入力してください。');
+            return; // 中止
+        }
+
         const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${Address},jp&appid=${apiKey}&units=metric&lang=ja`;//APIをたたく
 
         fetch(apiUrl)  // 引数に設定したURL（apiUrl）に対してHTTPリクエストを送信
@@ -69,7 +77,7 @@ export default function MyApp() {
                     <input
                         name="AddressForm"
                         id='AddressInput'
-                        placeholder='123-4567'
+                        placeholder='123-4567(半角)'
                         size="8"
                         maxLength="8"
                         value={Address}
