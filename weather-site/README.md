@@ -1,4 +1,4 @@
-仕様した技術:vite+React
+仕様した技術:vite+React  
 
 環境的な面では  
 習得のしやすさや、圧倒的なマーケットシェアを記録しているため需要が高いため。  
@@ -10,3 +10,18 @@ useStateフックで状態を簡単に管理できる点
 アニメーションや遷移エフェクトなどを入れやすい  
 
 などからReactを選択しました。
+
+***
+## setup
+```
+npm create vite@latest
+```
+```
+select a framework
+>React
+
+select a variant
+>Java Script
+```
+
+
