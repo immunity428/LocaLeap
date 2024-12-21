@@ -12,8 +12,8 @@ useStateフックで状態を簡単に管理できる点
 などからReactを選択しました。
 
 ***
-## setup
-```
+## 依存関係のインストール
+```bash
 npm create vite@latest
 ```
 ```
@@ -23,5 +23,11 @@ select a framework
 select a variant
 >Java Script
 ```
+
+## 開発サーバーの起動
+```bash
+npm run dev
+```
+***
 
 
