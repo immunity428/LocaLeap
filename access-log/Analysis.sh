@@ -7,13 +7,13 @@ log_path="files/$log_file"
 
 # ファイル存在確認
 if [ ! -f "$log_path" ]; then #-f パスが通常のファイルであるかどうか
-    echo "エラー: ログファイルが見つかりません: $log_path"
+    echo "エラー: ファイルが見つかりません: $log_path"
     exit 1 #終了
 fi
 
 # ファイルが空か確認
 if [ ! -s "$log_path" ]; then #-s ファイルサイズの確認
-    echo "エラー: ログファイルが空です: $log_path"
+    echo "エラー: ファイルが空です: $log_path"
     exit 1 #終了
 fi
 
