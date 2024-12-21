@@ -5,7 +5,7 @@ export default function MyApp() {
     const [Address, setAddress] = useState(""); // 郵便番号
     const [weatherData, set5daysWeather] = useState([]); // 天気データ
     const [cityName, setCity] = useState(""); // 市名
-    const [ToDoList, setToDoList] = useState([[], [], [], [], []]); // 各日のToDoリストを管理
+    const [ToDoList, setToDoList] = useState([[], [], [], [], []]); // 各日のToDoリスト
     const [newToDos, setNewToDos] = useState(["", "", "", "", ""]); // 新しいToDo入力欄の状態
     const [errormsg, seterrormsg] = useState([""]);
     const apiKey = import.meta.env.VITE_API_KEY;
@@ -16,57 +16,73 @@ export default function MyApp() {
 
         if (formcheck) {
             seterrormsg('郵便番号は半角で入力してください。');
-            setAddress(""); // エラー後に入力欄をリセット
+            setAddress("");
             return;
         }
 
         const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${Address},jp&appid=${apiKey}&units=metric&lang=ja`;
 
         fetch(apiUrl)  // 引数に設定したURL（apiUrl）に対してHTTPリクエストを送信
+
             .then(response => response.json())  // fetchが成功したらresponseとして受け取りjsonに変換
+
             .then(data => {  // dataにはJSON形式で解析されたAPIからのレスポンスデータが格納
+
                 // 3時間ごとのデータから1日ごとにデータを抽出
                 const fivedaysforecast = data.list.filter((entry, index) => index % 8 === 0); //値も型も一致しているもの
                 // const 変数名 = 3時間ごとの天気データ配列.filter((配列の現在の要素, 順番) => 条件式)
-                set5daysWeather(fivedaysforecast);  // 5日分の天気のデータをuseStateで更新
-                setCity(data.city.name);  // 上と同じ
-                seterrormsg(""); // エラーメッセージのリセット
+
+                set5daysWeather(fivedaysforecast);
+                setCity(data.city.name);
+                seterrormsg("");
             })
+
             .catch(error => {  // リクエストが失敗した場合や、JSON解析に失敗した場合など、エラーが発生した場合
-                console.error("天気情報の取得に失敗しました:", error);  // デバッグ用
-                seterrormsg('天気情報の取得に失敗しました');  // 視覚的な通知
-                setAddress(""); // エラー後に入力欄をリセット
+                console.error("天気情報の取得に失敗しました:", error);
+                seterrormsg('天気情報の取得に失敗しました');
+                setAddress("");
                 return;
             });
     };
 
     // ToDoの追加
-    const AddToDo = (index) => {  // indexはどのToDOリストか判断するため
+    const AddToDo = (index) => {  // indexはどのToDOリストか判断
         const newToDo = newToDos[index];
 
-        //ToDoの更新
+        //ToDoの更新(配列のリストのため、前の状態のコピーが必要)
+        //stateを直接変更しないようにするため、元の状態をコピーした物に変更を加えて更新する
+
         setToDoList(prev => {  // prev => {...} は関数の引数として直前の状態を受け取り、更新した新しい状態を返す
+
             const updated = [...prev];  //prev(既存の状態)を...(スプレッド構文)でコピー
+
             updated[index] = [...updated[index], newToDo];  //[index]番目のToDoリスト = コピーした[index]番目のToDoリストにnewToDoを追加
+
             return updated;  //更新された updated を返して最新の状態に
         });
 
         //入力欄の更新
         setNewToDos(prev => {
+
             const updated = [...prev]; //既存の状態をコピー
-            //stateを直接変更しないようにするため、元の状態をコピーした物に変更を加えて更新する
+
             updated[index] = ""; // 入力欄を初期化
+
             return updated;
         });
     };
 
     // ToDoの削除
     const DeleteToDo = (index, ToDoindex) => {  // 特定のToDoリストから特定の番号目の内容
+
         setToDoList(prev => {
+
             const updated = [...prev];
+
             updated[index] = updated[index].filter((hoge, i) => i !== ToDoindex);  //updatedに対してfilter()
             //iにはindexが入る
             //削除対象のあるリスト = 削除対象以外をフィルターで残した物に
+
             return updated;
         });
     };
@@ -86,8 +102,11 @@ export default function MyApp() {
                         maxLength="8"
                         value={Address}
                         onChange={(e) => setAddress(e.target.value)}  // <input>のvalueの値をsetAddressの引数にして実行
+                    // onChangeは変更が入るたびにイベントを発生させる
                     />
                     <button id="SearchButton" onClick={ButtonClick}>送信</button>
+
+                    {/* 条件付きレンダリング */}
                     {errormsg && <p className="error-message">{errormsg}</p>}
 
                 </div>
