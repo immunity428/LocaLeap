@@ -2,37 +2,41 @@ import React, { useState } from 'react';
 import './App.css';
 
 export default function MyApp() {
-    // const [変数名, 関数名(この関数の引数が更新する値)] =useState(状態の初期値)
     const [Address, setAddress] = useState(""); // 郵便番号
     const [weatherData, set5daysWeather] = useState([]); // 天気データ
     const [cityName, setCity] = useState(""); // 市名
     const [ToDoList, setToDoList] = useState([[], [], [], [], []]); // 各日のToDoリストを管理
     const [newToDos, setNewToDos] = useState(["", "", "", "", ""]); // 新しいToDo入力欄の状態
+    const [errormsg, seterrormsg] = useState([""]);
     const apiKey = import.meta.env.VITE_API_KEY;
 
-    // ボタンがクリックされたときの処理
     const ButtonClick = () => {
         const formcheck = /[^\x01-\x7E]/.test(Address);
         // .test()メソッドは、引数(Address)が手前の正規表現パターンに一致するかどうかを調べ、結果をtrueまたはfalseで返す
 
         if (formcheck) {
-            alert('郵便番号は半角で入力してください。');
-            return; // 中止
+            seterrormsg('郵便番号は半角で入力してください。');
+            setAddress(""); // エラー後に入力欄をリセット
+            return;
         }
 
-        const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${Address},jp&appid=${apiKey}&units=metric&lang=ja`;//APIをたたく
+        const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${Address},jp&appid=${apiKey}&units=metric&lang=ja`;
 
         fetch(apiUrl)  // 引数に設定したURL（apiUrl）に対してHTTPリクエストを送信
             .then(response => response.json())  // fetchが成功したらresponseとして受け取りjsonに変換
             .then(data => {  // dataにはJSON形式で解析されたAPIからのレスポンスデータが格納
                 // 3時間ごとのデータから1日ごとにデータを抽出
-                const fivedaysforecast = data.list.filter((entry, index) => index % 8 === 0);
+                const fivedaysforecast = data.list.filter((entry, index) => index % 8 === 0); //値も型も一致しているもの
+                // const 変数名 = 3時間ごとの天気データ配列.filter((配列の現在の要素, 順番) => 条件式)
                 set5daysWeather(fivedaysforecast);  // 5日分の天気のデータをuseStateで更新
                 setCity(data.city.name);  // 上と同じ
+                seterrormsg(""); // エラーメッセージのリセット
             })
             .catch(error => {  // リクエストが失敗した場合や、JSON解析に失敗した場合など、エラーが発生した場合
                 console.error("天気情報の取得に失敗しました:", error);  // デバッグ用
-                alert('天気情報の取得に失敗しました');  // 視覚的な通知
+                seterrormsg('天気情報の取得に失敗しました');  // 視覚的な通知
+                setAddress(""); // エラー後に入力欄をリセット
+                return;
             });
     };
 
@@ -84,6 +88,8 @@ export default function MyApp() {
                         onChange={(e) => setAddress(e.target.value)}  // <input>のvalueの値をsetAddressの引数にして実行
                     />
                     <button id="SearchButton" onClick={ButtonClick}>送信</button>
+                    {errormsg && <p className="error-message">{errormsg}</p>}
+
                 </div>
 
                 <div id="forecast">
