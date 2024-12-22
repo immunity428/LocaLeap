@@ -4,10 +4,13 @@ import './Css/ToDoList.css';
 export default function ToDoList({ dayIndex, toDoList, setToDoList }) {
     const [newToDo, setNewToDo] = useState("");
 
+    //ToDoの更新(配列のリストのため、前の状態のコピーが必要)
+    //stateを直接変更しないようにするため、元の状態をprevでコピーした物に変更を加えて更新する
+
     const addToDo = () => {
         setToDoList((prev) => {
-            const updated = [...prev];
-            updated[dayIndex] = [...updated[dayIndex], newToDo];
+            const updated = [...prev];  // 既存の状態をコピー
+            updated[dayIndex] = [...updated[dayIndex], newToDo];  // 新しいToDoを追加
             return updated;
         });
         setNewToDo("");
@@ -16,7 +19,7 @@ export default function ToDoList({ dayIndex, toDoList, setToDoList }) {
     const deleteToDo = (toDoIndex) => {
         setToDoList((prev) => {
             const updated = [...prev];
-            updated[dayIndex] = updated[dayIndex].filter((_, i) => i !== toDoIndex);
+            updated[dayIndex] = updated[dayIndex].filter((_, i) => i !== toDoIndex);  // 削除対象以外をフィルターで抽出
             return updated;
         });
     };

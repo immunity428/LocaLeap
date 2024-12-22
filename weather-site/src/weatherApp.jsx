@@ -10,10 +10,10 @@ export default function WeatherApp() {
     const [errorMessage, setErrorMessage] = useState(""); // エラーメッセージ
     const [toDoList, setToDoList] = useState([[], [], [], [], []]); // 各日のToDoリスト
 
-    const apiKey = import.meta.env.VITE_API_KEY;
+    const apiKey = import.meta.env.VITE_API_KEY;  // 環境変数(OpenWeatherAPI)
 
     const fetchWeatherData = () => {
-        const formCheck = /[^\x01-\x7E]/.test(address);
+        const formCheck = /[^\x01-\x7E]/.test(address);  // 全角か確認
         if (formCheck) {
             setErrorMessage('郵便番号は半角で入力してください。');
             setAddress("");
@@ -25,7 +25,7 @@ export default function WeatherApp() {
         fetch(apiUrl)
             .then((response) => response.json())
             .then((data) => {
-                const filteredData = data.list.filter((_, index) => index % 8 === 0);
+                const filteredData = data.list.filter((_, index) => index % 8 === 0);  // 8の倍数の番目のデータのみ抽出(三時間に一回一日8回のため)
                 setWeatherData(filteredData);
                 setCityName(data.city.name);
                 setErrorMessage("");

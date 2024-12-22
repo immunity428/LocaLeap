@@ -9,7 +9,7 @@ export default function WeatherForecast({ weatherData, cityName, toDoList, setTo
                 <div>
                     <h3>{cityName} の5日間の天気</h3>
                     <div className="weather-grid">
-                        {weatherData.map((entry, index) => {
+                        {weatherData.map((entry, index) => {  // weatherDataの要素分繰り返す
                             const date = new Date(entry.dt * 1000).toLocaleDateString();
                             const temp = entry.main.temp;
                             const description = entry.weather[0].description;
